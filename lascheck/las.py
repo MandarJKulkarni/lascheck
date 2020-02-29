@@ -724,7 +724,7 @@ class LASFile(object):
     def json(self, value):
         raise Exception("Cannot set objects from JSON")
 
-    def check_conforming(self):
+    def check_conformity(self):
         return spec.MandatorySections.check(self) and \
                spec.MandatoryLinesInVersionSection.check(self) and \
                spec.MandatoryLinesInWellSection.check(self) and \
