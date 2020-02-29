@@ -6,7 +6,7 @@ import os
 __version__ = '0.1.0'
 
 CLASSIFIERS = [
-    "Development Status :: 1 - Beta",
+    "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
