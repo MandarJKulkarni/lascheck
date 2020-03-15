@@ -734,6 +734,26 @@ class LASFile(object):
                spec.ValidDepthDividedByStep.check(self) and \
                spec.BlankLineInSection.check(self)
 
+    def get_non_conformities(self):
+        non_conformities = []
+        if (spec.MandatorySections.check(self)) is False:
+            non_conformities.append("Missing a mandatory section")
+        if (spec.MandatoryLinesInVersionSection.check(self)) is False:
+            non_conformities.append("Missing mandatory mines in ~v Section")
+        if (spec.MandatoryLinesInWellSection.check(self)) is False:
+            non_conformities.append("Missing mandatory lines in ~w Section")
+        if (spec.DuplicateSections.check(self)) is False:
+            non_conformities.append("Containing duplicate sections")
+        if (spec.ValidIndexMnemonic.check(self)) is False:
+            non_conformities.append("Invalid index mnemonic")
+        if (spec.VSectionFirst.check(self)) is False:
+            non_conformities.append("~v section not first")
+        if (spec.ValidDepthDividedByStep.check(self)) is False:
+            non_conformities.append("Depth divided by step is not valid")
+        if (spec.BlankLineInSection.check(self)) is False:
+            non_conformities.append("Section having blank line")
+        return non_conformities
+
 
 class Las(LASFile):
 
