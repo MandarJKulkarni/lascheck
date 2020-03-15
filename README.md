@@ -12,4 +12,5 @@ Simple example
 ```
  >>> las = lascheck.read('sample.las')
  >>> las.check_conformity()
+ >>> las.get_non_conformities()
 ```
