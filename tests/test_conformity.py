@@ -156,6 +156,7 @@ def test_check_depth_divide_by_step():
 def test_check_blank_line_in_section():
     las = lascheck.read(egfn("blank_line_embedded_in_section.las"))
     assert not spec.BlankLineInSection.check(las)
+    assert las.get_non_conformities() == ["Section having blank line"]
 
 
 def test_check_conforming_positive():
