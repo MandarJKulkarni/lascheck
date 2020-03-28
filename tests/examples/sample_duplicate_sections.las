@@ -79,9 +79,9 @@
  MDEN.           2710.0000:   LOGGING MATRIX DENSITY
  RMF .OHMM          0.2160:   MUD FILTRATE RESISTIVITY
  DFD .K/M3       1525.0000:   DRILL FLUID DENSITY
-~Other
-     Note: The logging tools became stuck at 625 meters causing the data
-	   between 625 meters and 615 meters to be invalid.
+~Other1
+     Note2: The logging tools became stuck at 685 meters causing the data
+	   between 685 meters and 675 meters to be invalid.
 ~A  DEPTH     DT       RHOB     NPHI     SFLU     SFLA      ILM      ILD
 1670.000   123.450 2550.000    0.450  123.450  123.450  110.200  105.600
 1669.875   123.450 2550.000    0.450  123.450  123.450  110.200  105.600
