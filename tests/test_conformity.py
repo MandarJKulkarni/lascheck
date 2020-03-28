@@ -161,3 +161,4 @@ def test_check_blank_line_in_section():
 def test_check_conforming_positive():
     las = lascheck.read(egfn("sample.las"))
     assert las.check_conformity()
+    assert las.get_non_conformities() == []
