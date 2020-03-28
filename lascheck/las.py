@@ -62,7 +62,7 @@ class LASFile(object):
         super(LASFile, self).__init__()
         self._text = ""
         self.index_unit = None
-
+        self.non_conformities = []
         self.duplicate_v_section = False
         self.duplicate_w_section = False
         self.duplicate_p_section = False
@@ -161,6 +161,7 @@ class LASFile(object):
 
         if self.match_raw_section("~V"):
             self.duplicate_v_section = True
+            self.non_conformities.append("Duplicate v section")
 
         # Establish version and wrap values if possible.
 
@@ -206,6 +207,7 @@ class LASFile(object):
 
         if self.match_raw_section("~W"):
             self.duplicate_w_section = True
+            self.non_conformities.append("Duplicate w section")
 
         # Establish NULL value if possible.
 
@@ -225,6 +227,7 @@ class LASFile(object):
 
         if self.match_raw_section("~C"):
             self.duplicate_c_section = True
+            self.non_conformities.append("Duplicate c section")
 
         add_section(
             "~P",
@@ -236,6 +239,7 @@ class LASFile(object):
 
         if self.match_raw_section("~P"):
             self.duplicate_p_section = True
+            self.non_conformities.append("Duplicate p section")
 
         s = self.match_raw_section("~O")
 
@@ -248,6 +252,7 @@ class LASFile(object):
 
         if self.match_raw_section("~O"):
             self.duplicate_o_section = True
+            self.non_conformities.append("Duplicate O section")
 
         # Deal with nonstandard sections that some operators and/or
         # service companies (eg IHS) insist on adding.
@@ -735,24 +740,24 @@ class LASFile(object):
                spec.BlankLineInSection.check(self)
 
     def get_non_conformities(self):
-        non_conformities = []
+        # non_conformities = []
         if (spec.MandatorySections.check(self)) is False:
-            non_conformities.append("Missing a mandatory section")
+            self.non_conformities.append("Missing a mandatory section")
         if (spec.MandatoryLinesInVersionSection.check(self)) is False:
-            non_conformities.append("Missing mandatory lines in ~v Section")
+            self.non_conformities.append("Missing mandatory lines in ~v Section")
         if (spec.MandatoryLinesInWellSection.check(self)) is False:
-            non_conformities.append("Missing mandatory lines in ~w Section")
-        if (spec.DuplicateSections.check(self)) is False:
-            non_conformities.append("Containing duplicate sections")
+            self.non_conformities.append("Missing mandatory lines in ~w Section")
+        # if (spec.DuplicateSections.check(self)) is False:
+        #     non_conformities.append("Containing duplicate sections")
         if (spec.ValidIndexMnemonic.check(self)) is False:
-            non_conformities.append("Invalid index mnemonic")
+            self.non_conformities.append("Invalid index mnemonic")
         if (spec.VSectionFirst.check(self)) is False:
-            non_conformities.append("~v section not first")
+            self.non_conformities.append("~v section not first")
         if (spec.ValidDepthDividedByStep.check(self)) is False:
-            non_conformities.append("Depth divided by step is not valid")
+            self.non_conformities.append("Depth divided by step is not valid")
         if (spec.BlankLineInSection.check(self)) is False:
-            non_conformities.append("Section having blank line")
-        return non_conformities
+            self.non_conformities.append("Section having blank line")
+        return self.non_conformities
 
 
 class Las(LASFile):
