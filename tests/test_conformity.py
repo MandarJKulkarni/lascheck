@@ -96,6 +96,7 @@ def test_check_no_well_loc():
 def test_check_no_well_prov():
     las = lascheck.read(egfn("missing_well_prov.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_prov_having_cnty():
@@ -116,6 +117,7 @@ def test_check_no_well_date():
 def test_check_no_well_uwi():
     las = lascheck.read(egfn("missing_well_uwi.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_uwi_having_api():
@@ -131,16 +133,19 @@ def test_check_no_well_section():
 def test_check_duplicate_sections():
     las = lascheck.read(egfn("sample_duplicate_sections.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Duplicate v section', 'Duplicate w section', 'Duplicate c section', 'Duplicate p section', 'Duplicate o section']
 
 
 def test_check_sections_after_a_section():
     las = lascheck.read(egfn("sample_sections_after_a_section.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Sections after ~a section"]
 
 
 def test_check_valid_mnemonic():
     las = lascheck.read(egfn("invalid_index_mnemonic.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Invalid index mnemonic"]
 
 
 def test_check_v_section_first():

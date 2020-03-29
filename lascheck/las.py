@@ -252,7 +252,7 @@ class LASFile(object):
 
         if self.match_raw_section("~O"):
             self.duplicate_o_section = True
-            self.non_conformities.append("Duplicate O section")
+            self.non_conformities.append("Duplicate o section")
 
         # Deal with nonstandard sections that some operators and/or
         # service companies (eg IHS) insist on adding.
@@ -754,6 +754,8 @@ class LASFile(object):
             self.non_conformities.append("Depth divided by step is not valid")
         if (spec.BlankLineInSection.check(self)) is False:
             self.non_conformities.append("Section having blank line")
+        if self.sections_after_a_section:
+            self.non_conformities.append("Sections after ~a section")
         return self.non_conformities
 
 
