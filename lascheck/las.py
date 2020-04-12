@@ -9,7 +9,6 @@ import math
 
 # get basestring in py3
 
-
 try:
     unicode = unicode
 except NameError:
