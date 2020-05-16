@@ -1,5 +1,5 @@
 ~VERSION INFORMATION
- VERS.                  1.2:   CWLS LOG ASCII STANDARD -VERSION 1.2
+ VERS.                  2:   CWLS LOG ASCII STANDARD -VERSION 2.0
  WRAP.                  NO:   ONE LINE PER DEPTH STEP
 ~WELL INFORMATION BLOCK
 #MNEM.UNIT       DATA TYPE    INFORMATION
@@ -20,9 +20,9 @@
 #MNEM.UNIT      API CODE      CURVE DESCRIPTION
 #---------    -------------   ------------------------------
  DEPT.M                      :  1  DEPTH
- DT  .US/M     		     :  2  SONIC TRANSIT TIME
+ DT  .US/M     		         :  2  SONIC TRANSIT TIME
  RHOB.K/M3                   :  3  BULK DENSITY
- NPHI.V/V                    :  4   NEUTRON POROSITY
+ NPHI.V/V                    :  4  NEUTRON POROSITY
  SFLU.OHMM                   :  5  RXO RESISTIVITY
  SFLA.OHMM                   :  6  SHALLOW RESISTIVITY
  ILM .OHMM                   :  7  MEDIUM RESISTIVITY
