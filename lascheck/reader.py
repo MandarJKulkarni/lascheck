@@ -367,7 +367,6 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
     sections[sect_title_line] = {
         "section_type": "data",
         "title": sect_title_line,
-        # "array": data,
         "line_nos": sect_line_nos,
         "lines": sect_lines
     }
