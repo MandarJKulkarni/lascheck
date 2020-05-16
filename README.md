@@ -43,7 +43,7 @@ The checks present in the package:
 
   Only one *"~W" *section can occur in an LAS 2.0 file.
 
-  ~W section must contain the lines: ...
+  ~W section must contain the lines: "STRT", "STOP", "STEP", "NULL", "COMP", "WELL", "FLD", "LOC", "SRVC", "DATE".
 
   Only one *"~C" *section can occur in an LAS 2.0 file.
 
