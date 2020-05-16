@@ -16,6 +16,7 @@ Simple example
 ```
 The checks present in the package:
 
+```
   The depth value divided by the step value must be a whole number
 
   The index curve (i.e. first curve) must be depth, time or index. 
@@ -51,3 +52,4 @@ The checks present in the package:
   Only one *"~O" *section can occur in an LAS 2.0 file.
 
   The data section ~A is the last section in a file.
+```
