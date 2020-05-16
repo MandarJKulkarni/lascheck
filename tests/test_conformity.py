@@ -13,6 +13,7 @@ readfromexamples = lambda fn: os.path.join(os.path.dirname(__file__), "examples"
 logger = logging.getLogger(__name__)
 
 
+# todo: add test for missing_a_section
 def test_check_conforming_no_version_section():
     las = lascheck.read(readfromexamples("missing_version_section.las"))
     assert not las.check_conformity()
