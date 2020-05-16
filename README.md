@@ -17,7 +17,7 @@ Simple example
 The checks present in the package:
 
 ```
-  The depth value divided by the step value must be a whole number
+  The depth value divided by the step value must be a whole number.
 
   The index curve (i.e. first curve) must be depth, time or index.
 
@@ -29,13 +29,13 @@ The checks present in the package:
 
   Embedded blank lines anywhere in the section are forbidden
 
-  "~V" is a required section;
+  "~V" is a required section.
 
-   "~W" (also known as "WELL INFORMATION SECTION") is a required section;
+   "~W" (also known as "WELL INFORMATION SECTION") is a required section.
 
-  *"~C" *(also known as ~CURVE INFORMATION SECTION") is a required section;
+  *"~C" *(also known as ~CURVE INFORMATION SECTION") is a required section.
 
-  *"~A" *(also known as ~ASCII LOG DATA") is a required section;
+  *"~A" *(also known as ~ASCII LOG DATA") is a required section.
 
   Only one *"~V" *section can occur in an LAS 2.0 file.
 
