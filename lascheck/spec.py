@@ -23,13 +23,14 @@ class CurvesSectionExists(Rule):
 class AsciiSectionExists(Rule):
     @staticmethod
     def check(las_file):
-        if "Curves" in las_file.sections:
-            for curve in las_file.curves:
-                if len(curve.data) == 0:
-                    return False
-            return True
-        else:
-            return False
+        return "Ascii" in las_file.sections
+        # if "Ascii" in las_file.sections:
+        #     # for curve in las_file.curves:
+        #     #     if len(curve.data) == 0:
+        #     #         return False
+        #     return True
+        # else:
+        #     return False
 
 
 class MandatorySections(Rule):

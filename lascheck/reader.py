@@ -297,37 +297,37 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
         if data_section_read:
             sections_after_a_section = True
 
-        if line.upper().startswith("~A"):
-            # HARD CODED FOR VERSION 1.2 and 2.0; needs review for 3.0
-            # We have finished looking at the metadata and need
-            # to start reading numerical data.
-            if not sect_title_line is None:
-                sections[sect_title_line] = {
-                    "section_type": "header",
-                    "title": sect_title_line,
-                    "lines": sect_lines,
-                    "line_nos": sect_line_nos,
-                }
-            if not ignore_data:
-                try:
-                    data = []
-                    data = read_data_section_iterative(
-                        file_obj, regexp_subs, value_null_subs
-                    )
-                    data_section_read = True
-                except KeyboardInterrupt:
-                    raise
-                except:
-                    raise exceptions.LASDataError(
-                        traceback.format_exc()[:-1]
-                        + " in data section beginning line {}".format(i + 1)
-                    )
-                sections[line] = {
-                    "section_type": "data",
-                    "start_line": i,
-                    "title": line,
-                    "array": data,
-                }
+        # if line.upper().startswith("~A"):
+        #     # HARD CODED FOR VERSION 1.2 and 2.0; needs review for 3.0
+        #     # We have finished looking at the metadata and need
+        #     # to start reading numerical data.
+        #     if not sect_title_line is None:
+        #         sections[sect_title_line] = {
+        #             "section_type": "header",
+        #             "title": sect_title_line,
+        #             "lines": sect_lines,
+        #             "line_nos": sect_line_nos,
+        #         }
+        #     # if not ignore_data:
+        #     try:
+        #         data = []
+        #         # data = read_data_section_iterative(
+        #         #     file_obj, regexp_subs, value_null_subs
+        #         # )
+        #         # data_section_read = True
+        #     # except KeyboardInterrupt:
+        #     #     raise
+        #     # except:
+        #     #     raise exceptions.LASDataError(
+        #     #         traceback.format_exc()[:-1]
+        #     #         + " in data section beginning line {}".format(i + 1)
+        #     #     )
+        #     sections[line] = {
+        #         "section_type": "data",
+        #         "start_line": i,
+        #         "title": line,
+        #         "array": data,
+        #     }
                 # logger.debug('Data section ["array"].shape = {}'.format(data.shape))
             # this may not be the last section
             # break
@@ -337,9 +337,10 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
                 # We have ended a section and need to start the next
                 if sections.keys().__len__() == 0:
                     # This is the first section we are adding
-                    if sect_title_line.startswith("~v") or\
-                            sect_title_line.startswith("~V"):
+                    if sect_title_line.startswith("~v") or sect_title_line.startswith("~V"):
                         v_section_first = True
+                if sect_title_line.startswith("~a") or sect_title_line.startswith("~A"):
+                    data_section_read = True
                 sections[sect_title_line] = {
                     "section_type": "header",
                     "title": sect_title_line,
@@ -361,20 +362,31 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
                 sect_lines.append(line)
                 sect_line_nos.append(i + 1)
 
+    # if sect_title_line.startswith("~A"):
+    # data = sect_lines
+    sections[sect_title_line] = {
+        "section_type": "data",
+        "title": sect_title_line,
+        # "array": data,
+        "line_nos": sect_line_nos,
+        "lines": sect_lines
+    }
+    data_section_read = True
+
     # Find the number of columns in the data section(s). This is only
     # useful if WRAP = NO, but we do it for all since we don't yet know
     # what the wrap setting is.
 
-    for section in sections.values():
-        if section["section_type"] == "data":
-            section["ncols"] = None
-            file_obj.seek(0)
-            for i, line in enumerate(file_obj):
-                if i == section["start_line"] + 1:
-                    for pattern, sub_str in regexp_subs:
-                        line = re.sub(pattern, sub_str, line)
-                    section["ncols"] = len(line.split())
-                    break
+    # for section in sections.values():
+    #     if section["section_type"] == "data":
+    #         section["ncols"] = None
+    #         file_obj.seek(0)
+    #         for i, line in enumerate(file_obj):
+    #             if i == section["start_line"] + 1:
+    #                 for pattern, sub_str in regexp_subs:
+    #                     line = re.sub(pattern, sub_str, line)
+    #                 section["ncols"] = len(line.split())
+    #                 break
     return sections, sections_after_a_section, v_section_first, blank_line_in_section
 
 
@@ -573,6 +585,9 @@ class SectionParser(object):
         elif title.upper().startswith("~V"):
             self.func = self.metadata
             self.section_name2 = "Version"
+        elif title.upper().startswith("~A"):
+            self.func = self.metadata
+            self.section_name2 = "Ascii"
 
         self.version = version
         self.section_name = title

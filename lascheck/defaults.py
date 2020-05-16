@@ -48,12 +48,14 @@ ORDER_DEFINITIONS = {
             ('value:descr', ['STRT', 'STOP', 'STEP', 'NULL'])]),
         ('Curves', ['value:descr']),
         ('Parameter', ['value:descr']),
+        ('Ascii', ['value:descr'])
     ]),
     2.0: OrderedDict([
         ('Version', ['value:descr']),
         ('Well', ['value:descr']),
         ('Curves', ['value:descr']),
-        ('Parameter', ['value:descr'])
+        ('Parameter', ['value:descr']),
+        ('Ascii', ['value:descr'])
     ])}
 
 DEPTH_UNITS = {

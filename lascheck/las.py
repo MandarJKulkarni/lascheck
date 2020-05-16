@@ -243,6 +243,14 @@ class LASFile(object):
 
         s = self.match_raw_section("~O")
 
+        add_section(
+            "~A",
+            "Ascii",
+            version=version,
+            ignore_header_errors=ignore_header_errors,
+            mnemonic_case=mnemonic_case,
+        )
+
         drop = []
         if s:
             self.sections["Other"] = "\n".join(s["lines"])
@@ -265,55 +273,56 @@ class LASFile(object):
         for key in drop:
             self.raw_sections.pop(key)
 
-        if not ignore_data:
-            drop = []
-            s = self.match_raw_section("~A")
-            s_valid = True
-            if s is None:
-                logger.warning("No data section (regexp='~A') found")
-                s_valid = False
-            try:
-                if s["ncols"] is None:
-                    logger.warning("No numerical data found inside ~A section")
-                    s_valid = False
-            except:
-                pass
 
-            if s_valid:
-                arr = s["array"]
-                logger.debug("~A data.shape {}".format(arr.shape))
-                if version_NULL:
-                    arr[arr == null] = math.nan
-                logger.debug(
-                    "~A after NULL replacement data.shape {}".format(arr.shape)
-                )
-                if "Curves" in self.sections:
-                    n_curves = len(self.curves)
-                    n_arr_cols = len(self.curves)  # provisional pending below check
-                    logger.debug("n_curves=%d ncols=%d" % (n_curves, s["ncols"]))
-
-                    if wrap == "NO":
-                        if s["ncols"] > n_curves:
-                            n_arr_cols = s["ncols"]
-                    try:
-                        data = np.reshape(arr, (-1, n_arr_cols))
-                    except ValueError as e:
-                        err_msg = (
-                            "cannot reshape ~A array of "
-                            "size {arr_shape} into "
-                            "{n_arr_cols} columns".format(
-                                arr_shape=arr.shape, n_arr_cols=n_arr_cols
-                            )
-                        )
-                        if sys.version_info.major < 3:
-                            e.message = err_msg
-                            raise e
-                        else:
-                            raise ValueError(err_msg).with_traceback(e.__traceback__)
-                    self.set_data(data, truncate=False)
-                    drop.append(s["title"])
-            for key in drop:
-                self.raw_sections.pop(key)
+        # if not ignore_data:
+        #     drop = []
+        #     s = self.match_raw_section("~A")
+        #     s_valid = True
+        #     if s is None:
+        #         logger.warning("No data section (regexp='~A') found")
+        #         s_valid = False
+        #     try:
+        #         if s["ncols"] is None:
+        #             logger.warning("No numerical data found inside ~A section")
+        #             s_valid = False
+        #     except:
+        #         pass
+        #
+        #     if s_valid:
+        #         arr = s["array"]
+        #         # logger.debug("~A data.shape {}".format(arr.shape))
+        #         if version_NULL:
+        #             arr[arr == null] = math.nan
+        #         # logger.debug(
+        #         #     "~A after NULL replacement data.shape {}".format(arr.shape)
+        #         # )
+        #         if "Curves" in self.sections:
+        #             n_curves = len(self.curves)
+        #             n_arr_cols = len(self.curves)  # provisional pending below check
+        #             logger.debug("n_curves=%d ncols=%d" % (n_curves, s["ncols"]))
+        #
+        #             if wrap == "NO":
+        #                 if s["ncols"] > n_curves:
+        #                     n_arr_cols = s["ncols"]
+        #             try:
+        #                 data = np.reshape(arr, (-1, n_arr_cols))
+        #             except ValueError as e:
+        #                 err_msg = (
+        #                     "cannot reshape ~A array of "
+        #                     "size {arr_shape} into "
+        #                     "{n_arr_cols} columns".format(
+        #                         arr_shape=arr.shape, n_arr_cols=n_arr_cols
+        #                     )
+        #                 )
+        #                 if sys.version_info.major < 3:
+        #                     e.message = err_msg
+        #                     raise e
+        #                 else:
+        #                     raise ValueError(err_msg).with_traceback(e.__traceback__)
+        #             self.set_data(data, truncate=False)
+        #             drop.append(s["title"])
+        #     for key in drop:
+        #         self.raw_sections.pop(key)
 
         if "m" in str(index_unit):
             index_unit = "m"
