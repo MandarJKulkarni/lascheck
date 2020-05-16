@@ -39,7 +39,7 @@ The checks present in the package:
 
   Only one *"~V" *section can occur in an LAS 2.0 file.
 
-  ~V section must contain the following lines: VERS, WRAP.
+  ~V section must contain the lines: VERS, WRAP.
 
   Only one *"~W" *section can occur in an LAS 2.0 file.
 
