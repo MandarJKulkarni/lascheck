@@ -1,4 +1,4 @@
-~VERSION INFORMATION 
+~VERSION INFORMATION
 VERS  .    2.0                                     :CWLS Log ASCII Standard - VERSION 2.0
 WRAP  .    NO                                      :One Line per Depth step
 ~WELL INFORMATION 
@@ -16,5 +16,5 @@ DEPT            .ft                                        :                    
 #            DEPT 
 #                 
 #                 
-#                 
+#
 ~ASCII
