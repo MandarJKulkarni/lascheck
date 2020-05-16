@@ -144,6 +144,18 @@ def test_check_sections_after_a_section():
     assert las.get_non_conformities() == ["Sections after ~a section"]
 
 
+def test_check_sections_after_a_section_2():
+    las = lascheck.read(readfromexamples("sample_sections_after_a_section_2.las"))
+    assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Sections after ~a section"]
+
+
+def test_check_sections_before_a_section():
+    las = lascheck.read(readfromexamples("sample_sections_before_a_section.las"))
+    assert las.check_conformity()
+    assert las.get_non_conformities() == []
+
+
 def test_check_valid_mnemonic():
     las = lascheck.read(readfromexamples("invalid_index_mnemonic.las"))
     assert not las.check_conformity()
