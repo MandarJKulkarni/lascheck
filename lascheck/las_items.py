@@ -5,8 +5,6 @@ import logging
 # we have a third-party option to support Python 2.6
 from collections import OrderedDict
 
-# import numpy as np
-
 logger = logging.getLogger(__name__)
 
 
