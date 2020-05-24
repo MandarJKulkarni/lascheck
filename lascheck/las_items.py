@@ -5,7 +5,7 @@ import logging
 # we have a third-party option to support Python 2.6
 from collections import OrderedDict
 
-import numpy as np
+# import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -154,7 +154,7 @@ class CurveItem(HeaderItem):
         if data is None:
             data = []
         super(CurveItem, self).__init__(mnemonic, unit, value, descr)
-        self.data = np.asarray(data)
+        self.data = data
 
     @property
     def API_code(self):
