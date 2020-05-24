@@ -30,7 +30,6 @@ from . import exceptions
 from .las_items import HeaderItem, CurveItem, SectionItems, OrderedDict
 from . import defaults
 from . import reader
-# from . import writer
 from . import spec
 
 logger = logging.getLogger(__name__)
