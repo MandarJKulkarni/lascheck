@@ -1,6 +1,4 @@
 import re
-
-# import numpy as np
 import math
 
 from .las_items import (
