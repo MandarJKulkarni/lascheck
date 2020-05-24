@@ -2,11 +2,7 @@ import codecs
 import logging
 import os
 import re
-
-# ToDo: Can we avoid using numpy?
-import numpy as np
 import math
-from . import defaults
 
 # Convoluted import for StringIO in order to support:
 #
@@ -294,9 +290,6 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
             continue
         if data_section_read:
             sections_after_a_section = True
-        # this may not be the last section
-        # break
-
         elif line.startswith("~"):
             if section_exists:
                 # We have ended a section and need to start the next
@@ -327,71 +320,14 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
                 sect_lines.append(line)
                 sect_line_nos.append(i + 1)
 
-    # if sect_title_line.startswith("~A"):
-    # data = sect_lines
     sections[sect_title_line] = {
         "section_type": "data",
         "title": sect_title_line,
         "line_nos": sect_line_nos,
         "lines": sect_lines
     }
-    data_section_read = True
 
-    # Find the number of columns in the data section(s). This is only
-    # useful if WRAP = NO, but we do it for all since we don't yet know
-    # what the wrap setting is.
-
-    # for section in sections.values():
-    #     if section["section_type"] == "data":
-    #         section["ncols"] = None
-    #         file_obj.seek(0)
-    #         for i, line in enumerate(file_obj):
-    #             if i == section["start_line"] + 1:
-    #                 for pattern, sub_str in regexp_subs:
-    #                     line = re.sub(pattern, sub_str, line)
-    #                 section["ncols"] = len(line.split())
-    #                 break
     return sections, sections_after_a_section, v_section_first, blank_line_in_section
-
-
-def read_data_section_iterative(file_obj, regexp_subs, value_null_subs):
-    """Read data section into memory.
-
-    Arguments:
-        file_obj (open file-like object): should be positioned in line-by-line
-            reading mode, with the last line read being the title of the
-            ~ASCII data section.
-        regexp_subs (list): each item should be a tuple of the pattern and
-            substitution string for a call to re.sub() on each line of the
-            data section. See defaults.py READ_SUBS and NULL_SUBS for examples.
-        value_null_subs (list): list of numerical values to be replaced by
-            numpy.nan values.
-
-    Returns:
-        A 1-D numpy ndarray.
-
-    """
-#
-    def items(f):
-        for line in f:
-            if line.startswith("#"):
-                continue
-            if not line.strip():
-                return
-            if line.startswith("~"):
-                return
-            for pattern, sub_str in regexp_subs:
-                line = re.sub(pattern, sub_str, line)
-            for item in line.split():
-                try:
-                    yield np.float64(item)
-                except ValueError:
-                    yield item
-
-    array = np.array([i for i in items(file_obj)])
-    for value in value_null_subs:
-        array[array == value] = math.nan
-    return array
 
 
 def get_substitutions(read_policy, null_policy):
