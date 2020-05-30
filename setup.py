@@ -35,9 +35,6 @@ setup(name='lascheck',
       classifiers=CLASSIFIERS,
       keywords="las geophysics version",
       packages=["lascheck", ],
-      install_requires=[
-          "numpy",
-      ],
       entry_points={
           'console_scripts': [
               'lascheck = lascheck:version'
