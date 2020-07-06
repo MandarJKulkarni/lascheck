@@ -120,6 +120,7 @@ def test_check_no_well_prov():
 def test_check_no_well_prov_having_cnty():
     las = lascheck.read(readfromexamples("missing_well_prov_having_cnty.las"))
     assert las.check_conformity()
+    assert las.get_non_conformities() == []
 
 
 def test_check_no_well_srvc():
@@ -184,6 +185,7 @@ def test_check_valid_mnemonic():
 def test_check_v_section_first():
     las = lascheck.read(readfromexamples("sample_v_section_second.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["~v section not first"]
 
 
 def test_check_depth_divide_by_step():
