@@ -104,9 +104,11 @@ def test_check_no_well_fld():
     assert not las.check_conformity()
     assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
+
 def test_check_no_well_loc():
     las = lascheck.read(readfromexamples("missing_well_loc.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_prov():
