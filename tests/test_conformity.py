@@ -125,11 +125,13 @@ def test_check_no_well_prov_having_cnty():
 def test_check_no_well_srvc():
     las = lascheck.read(readfromexamples("missing_well_srvc.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_date():
     las = lascheck.read(readfromexamples("missing_well_date.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_uwi():
