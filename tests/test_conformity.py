@@ -35,6 +35,7 @@ def test_check_conforming_no_curves_section():
 def test_check_conforming_no_ascii_section():
     las = lascheck.read(readfromexamples("missing_ascii_section.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Missing a mandatory section']
 
 
 # Test for a las file containing ~A section but no ~C section
