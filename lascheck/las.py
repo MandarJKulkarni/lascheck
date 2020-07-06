@@ -694,7 +694,7 @@ class LASFile(object):
     def get_non_conformities(self):
         if (spec.MandatorySections.check(self)) is False:
             self.non_conformities.append("Missing a mandatory section")
-        if (spec.MandatoryLinesInVersionSection.check(self)) is False:
+        if ("Version" in self.sections) and (spec.MandatoryLinesInVersionSection.check(self)) is False:
             self.non_conformities.append("Missing mandatory lines in ~v Section")
         if (spec.MandatoryLinesInWellSection.check(self)) is False:
             self.non_conformities.append("Missing mandatory lines in ~w Section")
