@@ -42,11 +42,13 @@ def test_check_conforming_no_ascii_section():
 def test_check_ascii_for_no_curves():
     las = lascheck.read(readfromexamples("missing_curves_section.las"))
     assert spec.AsciiSectionExists.check(las)
+    assert las.get_non_conformities() == ['Missing a mandatory section']
 
 
 def test_check_no_version():
     las = lascheck.read(readfromexamples("missing_vers.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Missing mandatory lines in ~v Section']
 
 
 def test_check_no_wrap():
