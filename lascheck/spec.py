@@ -88,26 +88,29 @@ class DuplicateSections(Rule):
 class ValidIndexMnemonic(Rule):
     @staticmethod
     def check(las_file):
-        if las_file.curves[0].mnemonic == "DEPT" or \
-                las_file.curves[0].mnemonic == "DEPTH" or \
-                las_file.curves[0].mnemonic == "TIME" or \
-                las_file.curves[0].mnemonic == "INDEX":
-            return True
+        if "Curves" in las_file.sections:
+            if las_file.curves[0].mnemonic == "DEPT" or \
+                    las_file.curves[0].mnemonic == "DEPTH" or \
+                    las_file.curves[0].mnemonic == "TIME" or \
+                    las_file.curves[0].mnemonic == "INDEX":
+                return True
         return False
 
 
 class ValidDepthDividedByStep(Rule):
     @staticmethod
     def check(las_file):
-        if las_file.curves[0].mnemonic != "DEPT" and \
-                las_file.curves[0].mnemonic != "DEPTH":
-            return True
-        else:
-            index_data =las_file[las_file.curves[0].mnemonic]
-            for dept_value in index_data:
-                if dept_value % las_file.well.step.value != 0:
-                    return False
-            return True
+        if "Curves" in las_file.sections:
+            if las_file.curves[0].mnemonic != "DEPT" and \
+                    las_file.curves[0].mnemonic != "DEPTH":
+                return True
+            else:
+                index_data =las_file[las_file.curves[0].mnemonic]
+                for dept_value in index_data:
+                    if dept_value % las_file.well.step.value != 0:
+                        return False
+                return True
+        return False
 
 
 class VSectionFirst(Rule):
