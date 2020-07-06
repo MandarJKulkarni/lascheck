@@ -143,6 +143,7 @@ def test_check_no_well_uwi():
 def test_check_no_well_uwi_having_api():
     las = lascheck.read(readfromexamples("missing_well_uwi_having_api.las"))
     assert las.check_conformity()
+    assert las.get_non_conformities() == []
 
 
 def test_check_no_well_section():
