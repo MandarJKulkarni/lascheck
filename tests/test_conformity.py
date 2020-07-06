@@ -54,47 +54,55 @@ def test_check_no_version():
 def test_check_no_wrap():
     las = lascheck.read(readfromexamples("missing_wrap.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Missing mandatory lines in ~v Section']
 
 
 def test_check_no_version_section():
     las = lascheck.read(readfromexamples("missing_version_section.las"))
     assert not spec.MandatoryLinesInVersionSection.check(las)
+    assert las.get_non_conformities() == ['Missing a mandatory section', '~v section not first']
 
 
 def test_check_no_well_well():
     las = lascheck.read(readfromexamples("missing_well_well.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_strt():
     las = lascheck.read(readfromexamples("missing_well_strt.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_stop():
     las = lascheck.read(readfromexamples("missing_well_stop.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_step():
     las = lascheck.read(readfromexamples("missing_well_step.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_null():
     las = lascheck.read(readfromexamples("missing_well_null.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_comp():
     las = lascheck.read(readfromexamples("missing_well_comp.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 
 def test_check_no_well_fld():
     las = lascheck.read(readfromexamples("missing_well_fld.las"))
     assert not las.check_conformity()
-
+    assert las.get_non_conformities() == ["Missing mandatory lines in ~w Section"]
 
 def test_check_no_well_loc():
     las = lascheck.read(readfromexamples("missing_well_loc.las"))
