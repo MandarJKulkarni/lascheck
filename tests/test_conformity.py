@@ -17,16 +17,19 @@ logger = logging.getLogger(__name__)
 def test_check_conforming_no_version_section():
     las = lascheck.read(readfromexamples("missing_version_section.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Missing a mandatory section', '~v section not first']
 
 
 def test_check_conforming_no_well_section():
     las = lascheck.read(readfromexamples("missing_well_section.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Missing a mandatory section', "Missing mandatory lines in ~w Section"]
 
 
 def test_check_conforming_no_curves_section():
     las = lascheck.read(readfromexamples("missing_curves_section.las"))
     assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Missing a mandatory section']
 
 
 def test_check_conforming_no_ascii_section():
