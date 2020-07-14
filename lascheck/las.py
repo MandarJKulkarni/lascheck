@@ -145,6 +145,20 @@ class LASFile(object):
             for key in drop:
                 self.raw_sections.pop(key)
 
+        def add_special_section(pattern, name, **sect_kws):
+            raw_section = self.match_raw_section(pattern)
+            drop = []
+            if raw_section:
+                self.sections[name] = "\n".join(raw_section["lines"])
+                drop.append(raw_section["title"])
+            else:
+                logger.warning(
+                    "Header section %s regexp=%s was not found." % (name, pattern)
+                )
+
+            for key in drop:
+                self.raw_sections.pop(key)
+
         add_section(
             "~V",
             "Version",
@@ -235,23 +249,10 @@ class LASFile(object):
             self.duplicate_p_section = True
             self.non_conformities.append("Duplicate p section")
 
-        s = self.match_raw_section("~O")
 
-        add_section(
-            "~A",
-            "Ascii",
-            version=version,
-            ignore_header_errors=ignore_header_errors,
-            mnemonic_case=mnemonic_case,
-        )
+        add_special_section("~A", "Ascii")
 
-        drop = []
-        if s:
-            self.sections["Other"] = "\n".join(s["lines"])
-            drop.append(s["title"])
-        for key in drop:
-            self.raw_sections.pop(key)
-
+        add_special_section("~O", "Other")
         if self.match_raw_section("~O"):
             self.duplicate_o_section = True
             self.non_conformities.append("Duplicate o section")
