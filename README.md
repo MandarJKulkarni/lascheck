@@ -1,7 +1,7 @@
 # lascheck
 Python library for checking conformity of Log ASCII Standard (LAS) files to standards
 
-(Derived from lasio)
+Derived from [lasio](https://github.com/kinverarity1/lasio)
 
 Currently supports checking against LAS 2.0 standard only
 
