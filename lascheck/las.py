@@ -700,7 +700,8 @@ class LASFile(object):
         if (spec.MandatoryLinesInWellSection.check(self)) is False:
             self.non_conformities.append("Missing mandatory lines in ~w Section")
         if ('Curves' in self.sections) and (spec.ValidIndexMnemonic.check(self)) is False:
-            self.non_conformities.append("Invalid index mnemonic")
+            self.non_conformities.append("Invalid index mnemonic. "
+                                         "The only valid mnemonics for the index channel are DEPT, DEPTH, TIME, or INDEX.")
         if (spec.VSectionFirst.check(self)) is False:
             self.non_conformities.append("~v section not first")
         if ('Curves' in self.sections) and (spec.ValidDepthDividedByStep.check(self)) is False:

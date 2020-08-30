@@ -179,7 +179,8 @@ def test_check_sections_before_a_section():
 def test_check_valid_mnemonic():
     las = lascheck.read(readfromexamples("invalid_index_mnemonic.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ["Invalid index mnemonic"]
+    assert las.get_non_conformities() == ["Invalid index mnemonic. "
+                                         "The only valid mnemonics for the index channel are DEPT, DEPTH, TIME, or INDEX."]
 
 
 def test_check_v_section_first():
@@ -203,3 +204,6 @@ def test_check_conforming_positive():
     las = lascheck.read(readfromexamples("sample.las"))
     assert las.check_conformity()
     assert las.get_non_conformities() == []
+
+if __name__ == '__main__':
+    test_check_valid_mnemonic()
