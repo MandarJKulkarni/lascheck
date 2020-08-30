@@ -65,6 +65,7 @@ class LASFile(object):
         self.sections_after_a_section = False
         self.v_section_first = False
         self.blank_line_in_section = False
+        self.section_with_blank_line = ""
 
         default_items = defaults.get_default_items()
         if not (file_ref is None):
@@ -120,7 +121,8 @@ class LASFile(object):
         )
 
         try:
-            self.raw_sections, self.sections_after_a_section, self.v_section_first, self.blank_line_in_section = \
+            self.raw_sections, self.sections_after_a_section, self.v_section_first, self.blank_line_in_section, \
+            self.section_with_blank_line = \
                 reader.read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=ignore_data)
         finally:
             if hasattr(file_obj, "close"):
@@ -707,7 +709,7 @@ class LASFile(object):
         if ('Curves' in self.sections) and (spec.ValidDepthDividedByStep.check(self)) is False:
             self.non_conformities.append("Depth divided by step is not valid")
         if (spec.BlankLineInSection.check(self)) is False:
-            self.non_conformities.append("Section having blank line")
+            self.non_conformities.append("Section {} having blank line".format(self.section_with_blank_line))
         if self.sections_after_a_section:
             self.non_conformities.append("Sections after ~a section")
         return self.non_conformities
