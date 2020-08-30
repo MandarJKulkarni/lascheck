@@ -12,7 +12,7 @@ readfromexamples = lambda fn: os.path.join(os.path.dirname(__file__), "examples"
 
 logger = logging.getLogger(__name__)
 
-# todo: add test for file missing multiple sections
+# todo: add test for file missing multiple mandatory sections
 # todo: add test for missing_a_section.las
 
 
@@ -195,6 +195,8 @@ def test_check_depth_divide_by_step():
     las = lascheck.read(readfromexamples("sample.las"))
     assert spec.ValidDepthDividedByStep.check(las)
 
+
+# todo: add tests for blank lines in other secions
 
 def test_check_blank_line_in_section():
     las = lascheck.read(readfromexamples("blank_line_embedded_in_section.las"))
