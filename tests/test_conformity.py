@@ -204,6 +204,3 @@ def test_check_conforming_positive():
     las = lascheck.read(readfromexamples("sample.las"))
     assert las.check_conformity()
     assert las.get_non_conformities() == []
-
-if __name__ == '__main__':
-    test_check_valid_mnemonic()
