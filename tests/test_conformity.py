@@ -17,32 +17,32 @@ logger = logging.getLogger(__name__)
 def test_check_conforming_no_version_section():
     las = lascheck.read(readfromexamples("missing_version_section.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ['Missing a mandatory section', '~v section not first']
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~V\']', '~v section not first']
 
 
 def test_check_conforming_no_well_section():
     las = lascheck.read(readfromexamples("missing_well_section.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ['Missing a mandatory section', "Missing mandatory lines in ~w Section"]
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~W\']', "Missing mandatory lines in ~w Section"]
 
 
 def test_check_conforming_no_curves_section():
     las = lascheck.read(readfromexamples("missing_curves_section.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ['Missing a mandatory section']
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~C\']']
 
 
 def test_check_conforming_no_ascii_section():
     las = lascheck.read(readfromexamples("missing_ascii_section.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ['Missing a mandatory section']
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~A\']']
 
 
 # Test for a las file containing ~A section but no ~C section
 def test_check_ascii_for_no_curves():
     las = lascheck.read(readfromexamples("missing_curves_section.las"))
     assert spec.AsciiSectionExists.check(las)
-    assert las.get_non_conformities() == ['Missing a mandatory section']
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~C\']']
 
 
 def test_check_no_version():
@@ -60,7 +60,7 @@ def test_check_no_wrap():
 def test_check_no_version_section():
     las = lascheck.read(readfromexamples("missing_version_section.las"))
     assert not spec.MandatoryLinesInVersionSection.check(las)
-    assert las.get_non_conformities() == ['Missing a mandatory section', '~v section not first']
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~V\']', '~v section not first']
 
 
 def test_check_no_well_well():
