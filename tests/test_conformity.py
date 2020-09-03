@@ -196,12 +196,48 @@ def test_check_depth_divide_by_step():
     assert spec.ValidDepthDividedByStep.check(las)
 
 
-# todo: add tests for blank lines in other secions
+def test_check_blank_line_in_version_section():
+    las = lascheck.read(readfromexamples("blank_line_in_version_section.las"))
+    # import pdb; pdb.set_trace()
+    assert not spec.BlankLineInSection.check(las)
+    assert las.get_non_conformities() == ["Section ~VERSION having blank line"]
 
-def test_check_blank_line_in_section():
-    las = lascheck.read(readfromexamples("blank_line_embedded_in_section.las"))
+
+def test_check_blank_line_in_well_section():
+    las = lascheck.read(readfromexamples("blank_line_in_well_section.las"))
     assert not spec.BlankLineInSection.check(las)
     assert las.get_non_conformities() == ["Section ~WELL having blank line"]
+
+
+def test_check_blank_line_in_curve_section():
+    las = lascheck.read(readfromexamples("blank_line_in_curve_section.las"))
+    assert not spec.BlankLineInSection.check(las)
+    assert las.get_non_conformities() == ["Section ~CURVE having blank line"]
+
+
+def test_check_blank_line_in_parameter_section():
+    las = lascheck.read(readfromexamples("blank_line_in_parameter_section.las"))
+    assert not spec.BlankLineInSection.check(las)
+    assert las.get_non_conformities() == ["Section ~PARAMETER having blank line"]
+
+
+def test_check_blank_line_in_other_section():
+    las = lascheck.read(readfromexamples("blank_line_in_other_section.las"))
+    assert not spec.BlankLineInSection.check(las)
+    assert las.get_non_conformities() == ["Section ~Other having blank line"]
+
+
+def test_check_blank_line_in_parameter_section():
+    las = lascheck.read(readfromexamples("blank_line_in_ascii_section.las"))
+    assert not spec.BlankLineInSection.check(las)
+    assert las.get_non_conformities() == ["Section ~A having blank line"]
+
+
+# todo: this should report both a curve and a parameter blank line
+def test_check_blank_lines_in_two_section():
+    las = lascheck.read(readfromexamples("blank_line_in_two_sections.las"))
+    assert not spec.BlankLineInSection.check(las)
+    assert las.get_non_conformities() == ["Section ~PARAMETER having blank line"]
 
 
 def test_check_conforming_positive():
