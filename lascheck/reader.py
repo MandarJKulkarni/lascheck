@@ -281,7 +281,7 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
     sections_after_a_section = False
     v_section_first = False
     blank_line_in_section = False
-    section_with_blank_line = ""
+    sections_with_blank_line = [] 
 
     for i, line in enumerate(file_obj):
         line = line.strip()
@@ -289,6 +289,8 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
             if section_exists:
                 blank_line_in_section = True
                 section_with_blank_line = sect_title_line.split()[0]
+                sections_with_blank_line.append(
+                    section_with_blank_line)
             continue
         if data_section_read:
             sections_after_a_section = True
@@ -329,7 +331,7 @@ def read_file_contents(file_obj, regexp_subs, value_null_subs, ignore_data=False
         "lines": sect_lines
     }
 
-    return sections, sections_after_a_section, v_section_first, blank_line_in_section, section_with_blank_line
+    return sections, sections_after_a_section, v_section_first, blank_line_in_section, sections_with_blank_line
 
 
 def get_substitutions(read_policy, null_policy):
