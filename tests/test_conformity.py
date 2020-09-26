@@ -34,6 +34,13 @@ def test_check_conforming_no_curves_section():
     assert las.get_non_conformities() == ['Missing mandatory sections: [\'~C\']']
 
 
+def test_check_conforming_no_well_curves_ascii_section():
+    las = lascheck.read(readfromexamples("missing_well_curves_ascii_section.las"))
+    assert not las.check_conformity()
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~W\', \'~C\', \'~A\']',
+                                          'Missing mandatory lines in ~w Section']
+
+
 def test_check_conforming_no_ascii_section():
     las = lascheck.read(readfromexamples("missing_ascii_section.las"))
     assert not las.check_conformity()
