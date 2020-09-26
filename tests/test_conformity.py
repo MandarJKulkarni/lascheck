@@ -234,7 +234,7 @@ def test_check_blank_line_in_other_section():
     assert las.get_non_conformities() == ["Section ~Other having blank line"]
 
 
-def test_check_blank_line_in_parameter_section():
+def test_check_blank_line_in_ascii_section():
     las = lascheck.read(readfromexamples("blank_line_in_ascii_section.las"))
     assert not spec.BlankLineInSection.check(las)
     assert las.get_non_conformities() == ["Section ~A having blank line"]
