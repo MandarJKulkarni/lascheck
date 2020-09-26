@@ -12,7 +12,6 @@ readfromexamples = lambda fn: os.path.join(os.path.dirname(__file__), "examples"
 
 logger = logging.getLogger(__name__)
 
-# todo: add test for file missing multiple mandatory sections
 # todo: add test for missing_a_section.las
 
 
@@ -25,7 +24,8 @@ def test_check_conforming_no_version_section():
 def test_check_conforming_no_well_section():
     las = lascheck.read(readfromexamples("missing_well_section.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~W\']', "Missing mandatory lines in ~w Section"]
+    assert las.get_non_conformities() == ['Missing mandatory sections: [\'~W\']',
+                                          "Missing mandatory lines in ~w Section"]
 
 
 def test_check_conforming_no_curves_section():
@@ -164,7 +164,11 @@ def test_check_no_well_section():
 def test_check_duplicate_sections():
     las = lascheck.read(readfromexamples("sample_duplicate_sections.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ['Duplicate v section', 'Duplicate w section', 'Duplicate c section', 'Duplicate p section', 'Duplicate o section']
+    assert las.get_non_conformities() == ['Duplicate v section',
+                                          'Duplicate w section',
+                                          'Duplicate c section',
+                                          'Duplicate p section',
+                                          'Duplicate o section']
 
 
 def test_check_sections_after_a_section():
