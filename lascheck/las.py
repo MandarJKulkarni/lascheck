@@ -706,8 +706,8 @@ class LASFile(object):
                                          "The only valid mnemonics for the index channel are DEPT, DEPTH, TIME, or INDEX.")
         if (spec.VSectionFirst.check(self)) is False:
             self.non_conformities.append("~v section not first")
-        if ('Curves' in self.sections) and (spec.ValidDepthDividedByStep.check(self)) is False:
-            self.non_conformities.append("Depth divided by step is not valid")
+        if ('Well' in self.sections) and (spec.ValidDepthDividedByStep.check(self)) is False:
+            self.non_conformities.append("{Mnemonic} divided by step is not a whole number".format(Mnemonic=self.curves[0].mnemonic))
         if (spec.BlankLineInSection.check(self)) is False:
             for section in self.sections_with_blank_line:
                 self.non_conformities.append(
