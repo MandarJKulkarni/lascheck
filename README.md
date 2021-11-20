@@ -52,4 +52,8 @@ The checks present in the package:
   Only one *"~O" *section can occur in an LAS 2.0 file.
 
   The data section ~A is the last section in a file.
+  
+  The start depth (or time, or index) value when divided by the step depth (or time or index) value must be a whole number.
+
+ The stop depth (or time or index) value when divided by the step depth (or time or index) value must be a whole number.
 ```
