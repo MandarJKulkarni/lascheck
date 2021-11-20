@@ -113,16 +113,10 @@ class ValidIndexMnemonic(Rule):
 class ValidDepthDividedByStep(Rule):
     @staticmethod
     def check(las_file):
-        if "Curves" in las_file.sections:
-            if las_file.curves[0].mnemonic != "DEPT" and \
-                    las_file.curves[0].mnemonic != "DEPTH":
-                return True
-            else:
-                index_data =las_file[las_file.curves[0].mnemonic]
-                for dept_value in index_data:
-                    if dept_value % las_file.well.step.value != 0:
-                        return False
-                return True
+        if "Well" in las_file.sections and 'STRT' in las_file.well and \
+                'STOP' in las_file.well and 'STEP' in las_file.well:
+            return las_file.well['STRT'].value % las_file.well['STEP'].value == 0 and \
+            las_file.well['STOP'].value % las_file.well['STEP'].value == 0
         return False
 
 
