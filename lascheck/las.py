@@ -66,7 +66,7 @@ class LASFile(object):
         self.v_section_first = False
         self.blank_line_in_section = False
         self.sections_with_blank_line = []
-
+        self.non_conforming_depth = []
         default_items = defaults.get_default_items()
         if not (file_ref is None):
             self.sections = {}
@@ -703,7 +703,8 @@ class LASFile(object):
         if (spec.MandatoryLinesInWellSection.check(self)) is False:
             self.non_conformities.append("Missing mandatory lines in ~w Section")
         elif ('Well' in self.sections) and (spec.ValidDepthDividedByStep.check(self)) is False:
-            self.non_conformities.append("{Mnemonic} divided by step is not a whole number".format(Mnemonic=self.curves[0].mnemonic))
+            for non_conforming_depth in self.non_conforming_depth:
+                self.non_conformities.append("{Mnemonic} divided by step is not a whole number".format(Mnemonic=non_conforming_depth))
 
         if ('Curves' in self.sections) and (spec.ValidIndexMnemonic.check(self)) is False:
             self.non_conformities.append("Invalid index mnemonic. "
