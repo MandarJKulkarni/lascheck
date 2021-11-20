@@ -156,6 +156,12 @@ def test_check_no_well_uwi_having_api():
     assert las.get_non_conformities() == []
 
 
+def test_check_invalid_step():
+    las = lascheck.read(readfromexamples("sample_invalid_step.las"))
+    assert not las.check_conformity()
+    assert las.get_non_conformities() == ['DEPT divided by step is not a whole number']
+
+
 def test_check_no_well_section():
     las = lascheck.read(readfromexamples("missing_well_section.las"))
     assert not spec.MandatoryLinesInWellSection.check(las)
