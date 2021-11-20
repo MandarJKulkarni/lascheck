@@ -159,7 +159,8 @@ def test_check_no_well_uwi_having_api():
 def test_check_invalid_step():
     las = lascheck.read(readfromexamples("sample_invalid_step.las"))
     assert not las.check_conformity()
-    assert las.get_non_conformities() == ['DEPT divided by step is not a whole number']
+    assert las.get_non_conformities() == ['STRT divided by step is not a whole number',
+                                          'STOP divided by step is not a whole number']
 
 
 def test_check_no_well_section():
