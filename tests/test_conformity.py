@@ -156,6 +156,18 @@ def test_check_no_well_uwi_having_api():
     assert las.get_non_conformities() == []
 
 
+def test_check_invalid_start_step():
+    las = lascheck.read(readfromexamples("sample_invalid_start_step.las"))
+    assert not las.check_conformity()
+    assert las.get_non_conformities() == ['STRT divided by step is not a whole number']
+
+
+def test_check_invalid_stop_step():
+    las = lascheck.read(readfromexamples("sample_invalid_stop_step.las"))
+    assert not las.check_conformity()
+    assert las.get_non_conformities() == ['STOP divided by step is not a whole number']
+
+
 def test_check_invalid_step():
     las = lascheck.read(readfromexamples("sample_invalid_step.las"))
     assert not las.check_conformity()
