@@ -110,6 +110,21 @@ class ValidIndexMnemonic(Rule):
         return False
 
 
+class ValidUnitForDepth(Rule):
+    @staticmethod
+    def check(las_file):
+        if "Curves" in las_file.sections and "Well" in las_file.sections and 'STRT' in las_file.well and \
+                'STOP' in las_file.well and 'STEP' in las_file.well:
+            if (las_file.curves[0].mnemonic == "DEPT" or
+                    las_file.curves[0].mnemonic == "DEPTH"):
+                index_unit = las_file.curves[0].unit
+                return (index_unit == 'M' or index_unit == 'F' or index_unit == 'FT') \
+                    and las_file.well['STRT'].unit == index_unit and las_file.well['STOP'].unit == index_unit and \
+                    las_file.well['STEP'].unit == index_unit
+            return True
+        return True
+
+
 class ValidDepthDividedByStep(Rule):
     @staticmethod
     def check(las_file):

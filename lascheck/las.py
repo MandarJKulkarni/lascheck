@@ -692,7 +692,8 @@ class LASFile(object):
                spec.ValidIndexMnemonic.check(self) and \
                spec.VSectionFirst.check(self) and \
                spec.ValidDepthDividedByStep.check(self) and \
-               spec.BlankLineInSection.check(self)
+               spec.BlankLineInSection.check(self) and \
+               spec.ValidUnitForDepth.check(self)
 
     def get_non_conformities(self):
         if (spec.MandatorySections.check(self)) is False:
@@ -718,6 +719,9 @@ class LASFile(object):
                     "Section {} having blank line".format(section))
         if self.sections_after_a_section:
             self.non_conformities.append("Sections after ~a section")
+        if (spec.ValidUnitForDepth.check(self)) is False:
+            self.non_conformities.append(
+                    "If the index is depth, the units must be M (metres), F (feet) or FT (feet)")
         return self.non_conformities
 
 
