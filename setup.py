@@ -1,9 +1,8 @@
 '''Setup script for lascheck'''
 
 from setuptools import setup
-import os
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 CLASSIFIERS = [
     "Development Status :: 4 - Beta",
