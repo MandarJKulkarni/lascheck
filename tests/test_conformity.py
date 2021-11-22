@@ -215,6 +215,18 @@ def test_check_valid_mnemonic():
                                          "The only valid mnemonics for the index channel are DEPT, DEPTH, TIME, or INDEX."]
 
 
+def test_check_valid_depth_unit():
+    las = lascheck.read(readfromexamples("invalid_depth_unit.las"))
+    assert not las.check_conformity()
+    assert las.get_non_conformities() == ["If the index is depth, the units must be M (metres), F (feet) or FT (feet)"]
+
+
+def test_check_valid_depth_unit_mismatch():
+    las = lascheck.read(readfromexamples("invalid_depth_unit_mismatch.las"))
+    assert not las.check_conformity()
+    assert las.get_non_conformities() == ["If the index is depth, the units must be M (metres), F (feet) or FT (feet)"]
+
+
 def test_check_v_section_first():
     las = lascheck.read(readfromexamples("sample_v_section_second.las"))
     assert not las.check_conformity()
