@@ -53,7 +53,9 @@ The checks present in the package:
 
   The data section ~A is the last section in a file.
   
-  The start depth (or time, or index) value when divided by the step depth (or time or index) value must be a whole number.
+  The start depth (or time or index) value when divided by the step depth (or time or index) value must be a whole number.
 
   The stop depth (or time or index) value when divided by the step depth (or time or index) value must be a whole number.
+  
+  If the index is depth, the units must be M (metres), F (feet) or FT (feet).
 ```
