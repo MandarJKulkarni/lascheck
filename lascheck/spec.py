@@ -126,18 +126,42 @@ class ValidUnitForDepth(Rule):
 
 
 class ValidDepthDividedByStep(Rule):
+    def custom_float_modulo(a, b):
+        # Ensure a and b are positive
+        a, b = abs(a), abs(b)
+
+        # Find the scale factor to convert to integers
+        a_decimals = len(str(a).split('.')[-1]) if '.' in str(a) else 0
+        b_decimals = len(str(b).split('.')[-1]) if '.' in str(b) else 0
+        scale = 10 ** max(a_decimals, b_decimals)
+
+        # Scale a and b, but keep them as floats to avoid overflow
+        a_scaled = a * scale
+        b_scaled = b * scale
+
+        # Perform the modulo operation
+        quotient = a_scaled // b_scaled
+        remainder = a_scaled - quotient * b_scaled
+
+        # Scale back the remainder
+        return remainder / scale
+
     @staticmethod
     def check(las_file):
         if "Well" in las_file.sections and 'STRT' in las_file.well and \
                 'STOP' in las_file.well and 'STEP' in las_file.well:
             las_file.non_conforming_depth = []
-            if las_file.well['STRT'].value % las_file.well['STEP'].value != 0:
+            if ValidDepthDividedByStep.custom_float_modulo(las_file.well['STRT'].value, las_file.well['STEP'].value) != 0:
                 las_file.non_conforming_depth.append('STRT')
-            if las_file.well['STOP'].value % las_file.well['STEP'].value != 0:
+            if ValidDepthDividedByStep.custom_float_modulo(las_file.well['STOP'].value, las_file.well['STEP'].value) != 0:
                 las_file.non_conforming_depth.append('STOP')
+            # modulo operator has limitations, so using a custom float modulo function
+            # if las_file.well['STRT'].value % las_file.well['STEP'].value != 0:
+            #     las_file.non_conforming_depth.append('STRT')
+            # if las_file.well['STOP'].value % las_file.well['STEP'].value != 0:
+            #     las_file.non_conforming_depth.append('STOP')
             return las_file.non_conforming_depth.__len__() == 0
         return False
-
 
 class VSectionFirst(Rule):
     @staticmethod
