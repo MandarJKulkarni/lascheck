@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 CLASSIFIERS = [
     "Development Status :: 4 - Beta",
@@ -23,7 +23,7 @@ CLASSIFIERS = [
 
 
 setup(name='lascheck',
-      version=__version__,
+      version='0.1.5',
       description="checking conformity of Log ASCII Standard (LAS) files to LAS 2.0 standard",
       long_description=open("README.md", "r").read(),
       long_description_content_type="text/markdown",
@@ -33,10 +33,10 @@ setup(name='lascheck',
       license="MIT",
       classifiers=CLASSIFIERS,
       keywords="las geophysics version",
-      packages=["lascheck", ],
-      entry_points={
-          'console_scripts': [
-              'lascheck = lascheck:version'
-          ],
-      }
+      packages=["lascheck", ]
+      # entry_points={
+      #     'console_scripts': [
+      #         'lascheck = lascheck:version'
+      #     ],
+      # }
       )
