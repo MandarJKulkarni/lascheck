@@ -5,7 +5,7 @@ Derived from [lasio](https://github.com/kinverarity1/lasio)
 
 Currently supports checking against LAS 2.0 standard only
 
-http://www.cwls.org/wp-content/uploads/2014/09/LAS_20_Update_Jan2014.pdf
+https://www.cwls.org/wp-content/uploads/2017/02/Las2_Update_Feb2017.pdf
 
 Simple example
 
