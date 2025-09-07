@@ -287,3 +287,19 @@ def test_check_conforming_positive():
     las = lascheck.read(readfromexamples("sample.las"))
     assert las.check_conformity()
     assert las.get_non_conformities() == []
+
+    las = lascheck.read(readfromexamples("sample2.las"))
+    assert las.check_conformity()
+    assert las.get_non_conformities() == []
+
+    las = lascheck.read(readfromexamples("sample3.las"))
+    assert las.check_conformity()
+    assert las.get_non_conformities() == []
+
+    las = lascheck.read(readfromexamples("sample4_timebaseddata.las"))
+    assert las.check_conformity()
+    assert las.get_non_conformities() == []
+
+    las = lascheck.read(readfromexamples("sample5_indexbaseddata.las"))
+    assert las.check_conformity()
+    assert las.get_non_conformities() == []
